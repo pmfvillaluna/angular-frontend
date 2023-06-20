@@ -1,40 +1,60 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { FormsModule } from '@angular/forms';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { MessagesComponent } from './messages/messages.component';
-import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { AppRoutingModule } from './app-routing.module';
+import {MatCardModule} from '@angular/material/card';
+import { PersonDetailsComponent } from './components/person-details/person-details.component';
+import { PersonComponent } from './components/person/person.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { PersonDashboardComponent } from './components/person-dashboard/person-dashboard.component';
+import { MatDialogModule} from '@angular/material/dialog';
+import { MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import { PersonAddFormComponent } from './components/person-add-form/person-add-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule,
-    AppRoutingModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
     HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    AppRoutingModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatRadioModule
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
-    HeroesComponent,
-    HeroDetailComponent,
-    MessagesComponent,
-    HeroSearchComponent,
-
+    HeaderComponent,
+    PersonDetailsComponent,
+    PersonComponent,
+    PersonDashboardComponent,
+    PersonAddFormComponent
   ],
-  bootstrap: [ AppComponent ]
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
