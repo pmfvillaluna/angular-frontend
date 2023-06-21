@@ -1,163 +1,176 @@
-<form [formGroup]="personForm">
-<div mat-dialog-content>
-  <h2>Add Person Form</h2>
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <h2>Add Person Form</h2>
 
-  <div class="title">
-    <h3>Name</h3>
-  </div>
-  <div formGroupName="name">
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>First Name</mat-label>
-        <input matInput type="text" formControlName="firstName">
-        <mat-hint>e.g. John</mat-hint>
-      </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Middle Name</mat-label>
-        <input matInput type="text" formControlName="middleName">
-        <mat-hint>e.g. Michael</mat-hint>
-      </mat-form-field>
+    <div formGroupName="name">
+      <div class="row">
 
-      <mat-form-field appearance="outline">
-        <mat-label>Last Name</mat-label>
-        <input matInput type="text" formControlName="lastName">
-        <mat-hint>e.g. Doe</mat-hint>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="firstName">
+          <mat-hint>e.g. John</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Middle Name</mat-label>
+          <input matInput type="text" formControlName="middleName">
+          <mat-hint>e.g. Michael</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" formControlName="lastName">
+          <mat-hint>e.g. Doe</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Suffix</mat-label>
+          <input matInput type="text" formControlName="suffix">
+          <mat-hint>e.g. III, XIV</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <mat-select formControlName="title">
+            <mat-option value="Mr.">Mr.</mat-option>
+            <mat-option value="Ms.">Ms./Mrs.</mat-option>
+            <mat-option value="Mrs.">Others</mat-option>
+          </mat-select>
+          <mat-hint align="start">e.g. Mr., Mrs.</mat-hint>
+        </mat-form-field>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Suffix</mat-label>
-        <input matInput type="text" formControlName="suffix">
-        <mat-hint>e.g. III, XIV</mat-hint>
-      </mat-form-field>
+    <!-- Address -->
+    <div formArrayName="address">
+      <div class="title">
+        <h3>Address</h3>
+      </div>
 
+    <ng-container *ngFor="let addressGroup of contactControls.controls; let i = index" [formGroupName]="i">
+
+      <div class="row">
+          <mat-form-field appearance="outline" class="long-input">
+            <mat-label>Street No. and Name</mat-label>
+            <input matInput type="text" formControlName="streetNumber">
+            <mat-hint>e.g. 148 Manok Street</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="short-input">
+            <mat-label>Barangay</mat-label>
+              <input matInput type="text" formControlName="barangay">
+            <mat-hint>e.g. Tibagan</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+
+          <mat-form-field appearance="outline" class="long-input">
+            <mat-label>City Name</mat-label>
+              <input matInput type="text" formControlName="city">
+            <mat-hint>e.g. Marikina</mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" class="short-input">
+            <mat-label>Zip Code</mat-label>
+              <input matInput type="text" formControlName="zipCode">
+            <mat-hint>e.g. 2550</mat-hint>
+          </mat-form-field>
+        </div>
+        </ng-container>
+    </div>
+
+    <div class="title">
+      <h3>Birthday</h3>
+    </div>
+    <div class="row">
       <mat-form-field>
-        <mat-label>Title</mat-label>
-        <mat-select formControlName="title">
-          <mat-option value="Mr.">Mr.</mat-option>
-          <mat-option value="Ms.">Ms./Mrs.</mat-option>
-          <mat-option value="Mrs.">Mrs.</mat-option>
-        </mat-select>
-        <mat-hint align="start">e.g. Mr., Mrs.</mat-hint>
-      </mat-form-field>
-    </div>
-  </div>
-
-  <div class="title">
-    <h3>Address</h3>
-  </div>
-  <div formGroupName="address">
-    <div class="row">
-      <mat-form-field appearance="outline" class="long-input">
-        <mat-label>Street No. and Name</mat-label>
-        <input matInput type="text" formControlName="streetNumber">
-        <mat-hint>e.g. 148 Manok Street</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="short-input">
-        <mat-label>Barangay</mat-label>
-        <input matInput type="text" formControlName="barangay">
-        <mat-hint>e.g. Tibagan</mat-hint>
+        <mat-label>Birthday</mat-label>
+        <input matInput [matDatepicker]="birthdayPicker" formControlName="birthday">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+        <mat-datepicker #birthdayPicker></mat-datepicker>
       </mat-form-field>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="long-input">
-        <mat-label>City Name</mat-label>
-        <input matInput type="text" formControlName="city">
-        <mat-hint>e.g. Marikina</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="short-input">
-        <mat-label>Zip Code</mat-label>
-        <input matInput type="text" formControlName="zipCode">
-        <mat-hint>e.g. 2550</mat-hint>
-      </mat-form-field>
+    <!-- Contact Information -->
+    <div class="title">
+      <h3>Contact Information</h3>
     </div>
-  </div>
+    <div formArrayName="contactInformation">
+      <div class="row" *ngFor="let contactGroup of contactControls.controls; let i = index" [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>Landline</mat-label>
+          <input matInput type="text" formControlName="landline">
+          <mat-hint>e.g. 534-1234</mat-hint>
+        </mat-form-field>
 
-  <div class="title">
-    <h3>Birthday</h3>
-  </div>
-  <div class="row">
-    <mat-form-field>
-      <mat-label>Birthday</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="birthday">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile Number</mat-label>
+          <input matInput type="text" formControlName="mobileNumber">
+          <mat-hint>e.g. 0999-494-0221</mat-hint>
+        </mat-form-field>
 
-  <div class="title">
-    <h3>Contact Information</h3>
-  </div>
-  <div formGroupName="contactInformation" >
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Landline</mat-label>
-        <input matInput type="text" formControlName="landline">
-        <mat-hint>e.g. 534-1234</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Mobile Number</mat-label>
-        <input matInput type="text" formControlName="mobileNumber">
-        <mat-hint>e.g. 0999-494-0221</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email">
-        <mat-hint>e.g. johndoe@gmail.com</mat-hint>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-hint>e.g. johndoe@gmail.com</mat-hint>
+        </mat-form-field>
+      </div>
     </div>
-  </div>
 
-  <div class="title">
-    <h3>Employment Details</h3>
-  </div>
-  <div>
+    <!-- Employment Details -->
+    <div class="title">
+      <h3>Employment Details</h3>
+    </div>
     <div class="row">
-      <h4>Employment Status:</h4>
       <mat-radio-group formControlName="isEmployed">
+        <mat-label>Employment Status: </mat-label>
         <mat-radio-button checked [value]="false">Unemployed</mat-radio-button>
         <mat-radio-button [value]="true">Employed</mat-radio-button>
       </mat-radio-group>
     </div>
 
-    <div class="row" *ngIf="personForm.get('isEmployed')?.value === true">
-      <div formGroupName="roleNames">
-        <mat-form-field appearance="outline" class="short-input">
-          <mat-label>Role name</mat-label>
-          <input matInput type="text" formControlName="roleName">
-          <mat-hint>e.g. UI/UX, Senior Dev, Manager</mat-hint>
+    <ng-container *ngIf="personForm.get('isEmployed')?.value === true">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>GWA</mat-label>
+          <input matInput type="number" formControlName="GWA">
+          <mat-hint>e.g 1.5</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Date hired</mat-label>
+          <input matInput [matDatepicker]="dateHiredPicker" formControlName="dateHired">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="dateHiredPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateHiredPicker></mat-datepicker>
         </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>GWA</mat-label>
-        <input matInput  type="number" formControlName="GWA">
-        <mat-hint>e.g 1.5</mat-hint>
-      </mat-form-field>
+        <div class="row">
+          <div formArrayName="roles">
+            <h4>Roles</h4>
+            <div class="row" *ngFor="let roleGroup of roleControls.controls; let i = index" [formGroupName]="i">
+              <mat-form-field appearance="outline" class="short-input">
+                <mat-label>Role name</mat-label>
+                <input matInput type="text" formControlName="roleName">
+                <mat-hint>e.g. Dev, Manager</mat-hint>
+              </mat-form-field>
+            </div>
 
-      <mat-form-field>
-        <mat-label>Date hired</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dateHired">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
+          </div>
+        </div>
+      </ng-container>
   </div>
 
-
-</div>
-
-<div mat-dialog-actions class="action">
-  <button mat-raised-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
-</div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="submit" [mat-dialog-close]="false"> Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </div>
 </form>

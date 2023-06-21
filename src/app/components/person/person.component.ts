@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MockPerson } from 'src/app/mockPerson';
 import { Person } from 'src/app/models/person';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
@@ -16,7 +15,7 @@ export class PersonComponent implements OnInit {
   constructor(private personService: PersonService) { }
 
   ngOnInit(): void {
-    this.getHeroes();
+    this.getPerson();
   }
 
   selectPerson(person: Person) {
@@ -26,8 +25,8 @@ export class PersonComponent implements OnInit {
     return role === array[array.length - 1];
   }
 
-  getHeroes(): void {
-    this.personService.getHeroes()
+  getPerson(): void {
+    this.personService.getPerson()
     .subscribe(person => this.personList = person);
   }
 

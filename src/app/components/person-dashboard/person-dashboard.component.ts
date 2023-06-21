@@ -8,12 +8,9 @@ import { PersonAddFormComponent } from '../person-add-form/person-add-form.compo
 })
 export class PersonDashboardComponent implements OnInit {
 
-  constructor(private _dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
-  openEmployeeForm(){
-    this._dialog.open(PersonAddFormComponent)
-  }
 }

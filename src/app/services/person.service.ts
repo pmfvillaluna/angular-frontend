@@ -8,29 +8,43 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PersonService {
-private personUrl= 'http:localhost:8080/'
+private personUrl= 'http://localhost:8080/person'
+
 httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 constructor(private http: HttpClient) { }
 
-getHeroes(): Observable<Person[]> {
-  return this.http.get<Person[]>(`${this.personUrl}/person`)
+getPerson(): Observable<Person[]> {
+  return this.http.get<Person[]>(`${this.personUrl}/`)
     .pipe(
-      catchError(this.handleError<Person[]>('getHeroes', []))
+      catchError(this.handleError<Person[]>('getPerson', []))
     );
+}
+
+addEmployee(personData: Person): Observable<Person> { // Specify the return type as Observable<Person>
+  return this.http.post<Person>(`${this.personUrl}/create`, personData, this.httpOptions)
+    .pipe(
+      tap((personEntry: Person) => console.log(`Person added with ID of: ${personEntry.id}`)),
+      catchError(this.handleError<Person>('addEmployee'))
+    );
+}
+
+deletePerson(id: number): Observable<Person> {
+  const url = `${this.personUrl}/delete/${id}`;
+
+  return this.http.delete<Person>(url, this.httpOptions).pipe(
+    tap(_ => console.log(`deleted hero id=${id}`)),
+    catchError(this.handleError<Person>('deleteHero'))
+  );
 }
 
 private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
-
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
-
-    // TODO: better job of transforming error for user consumption
-
-    // Let the app keep running by returning an empty result.
+    console.error(error);
     return of(result as T);
   };
 }
+
 }

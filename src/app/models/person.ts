@@ -12,5 +12,5 @@ export interface Person {
   dateHired: Date;
   isEmployed: boolean;
   contactInformation: ContactInformation[];
-  roleNames: Role[];
+  roleName: Role[];
 }
