@@ -18,44 +18,45 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AppComponent } from './app.component';
-import { PersonDetailsComponent } from './components/person-details/person-details.component';
-import { PersonComponent } from './components/person/person.component';
 import { HeaderComponent } from './components/header/header.component';
-import { PersonDashboardComponent } from './components/person-dashboard/person-dashboard.component';
-import { PersonAddFormComponent } from './components/person-add-form/person-add-form.component';
-import { PersonTableComponent } from './components/person-table/person-table.component';
+import { PersonDashboardComponent } from './components/person/person-dashboard/person-dashboard.component';
+import { PersonAddFormComponent } from './components/person/person-add-form/person-add-form.component';
+import { PersonTableComponent } from './components/person/person-table/person-table.component';
+import { SampleTableComponent } from './components/example/sample-table/sample-table.component';
 
 @NgModule({
   imports: [
     BrowserModule,
+
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatSortModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatCardModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatPaginatorModule
+    MatCardModule,
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
-    PersonDetailsComponent,
-    PersonComponent,
     PersonDashboardComponent,
     PersonAddFormComponent,
-    PersonTableComponent
+    PersonTableComponent,
+    SampleTableComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,13 +23,23 @@ getPerson(): Observable<Person[]> {
     );
 }
 
-addEmployee(personData: Person): Observable<Person> { // Specify the return type as Observable<Person>
+
+addPerson(personData: Person): Observable<Person> { // Specify the return type as Observable<Person>
   return this.http.post<Person>(`${this.personUrl}/create`, personData, this.httpOptions)
     .pipe(
       tap((personEntry: Person) => console.log(`Person added with ID of: ${personEntry.id}`)),
-      catchError(this.handleError<Person>('addEmployee'))
+      catchError(this.handleError<Person>('addPerson'))
     );
 }
+
+updatePerson(personData: Person): Observable<Person>{
+  return this.http.put<Person>(`${this.personUrl}/update/${personData.id}`, personData, this.httpOptions)
+  .pipe(
+    tap((personEntry: Person) => console.log(`Person updated with ID of: ${personEntry.id}`)),
+    catchError(this.handleError<Person>('addPerson'))
+  );
+}
+
 
 deletePerson(id: number): Observable<Person> {
   const url = `${this.personUrl}/delete/${id}`;
@@ -42,7 +52,7 @@ deletePerson(id: number): Observable<Person> {
 
 private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
-    console.error(error);
+    console.error("ERROR IS: "+ error);
     return of(result as T);
   };
 }

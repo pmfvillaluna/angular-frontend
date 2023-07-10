@@ -1,0 +1,46 @@
+.title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title-button{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px; /* Adjust the value as needed */
+}
+.long-input{
+  flex-grow: 2;
+}
+.short-input{
+  flex-grow: 1;
+}
+
+.action {
+  padding: 0px 25px 20px;
+}
+
+.action button {
+  flex: 1;
+}
+
+.add-button {
+  margin-left: 10px;
+}
+
+.remove-button {
+  margin-left: 10px;
+}
+
+.role-input {
+  flex: 1;
+  margin-right: 10px;
+}
+

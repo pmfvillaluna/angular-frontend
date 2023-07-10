@@ -8,9 +8,10 @@ export interface Person {
   name: Name;
   address: Address[];
   birthday: Date;
-  GWA: number;
+  gwa: number;
   dateHired: Date;
-  isEmployed: boolean;
+  employed: boolean;
   contactInformation: ContactInformation[];
-  roleName: Role[];
+  roles: Role;
+  [key: string]: any
 }
