@@ -12,6 +12,6 @@ export interface Person {
   dateHired: Date;
   employed: boolean;
   contactInformation: ContactInformation[];
-  roles: Role;
+  roleName: string[]
   [key: string]: any
 }

@@ -46,46 +46,48 @@
 
 <!-- Address -->
 <div formArrayName="address">
-  <ng-container *ngFor="let addressGroup of addressControls.controls; let i = index" [formGroupName]="i">
+  <div *ngFor="let addressGroup of addressControls.controls; let addressIndex = index">
+    <div [formGroupName]="addressIndex">
+      <div class="title">
+        <h3>Address Details {{addressIndex +1 }}</h3>
+        <button mat-icon-button color="primary"  type="button" (click)="addAddress()" class="add-button">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" type="button" (click)="removeAddress(addressIndex)" class="remove-button" [disabled]="addressControls.controls.length === 1">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
 
-    <div class="title">
-      <h3>Address Details {{i+1 }}</h3>
-      <button mat-icon-button color="primary"  type="button" (click)="addAddress()" class="add-button">
-        <mat-icon>add</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" type="button" (click)="removeAddress(i)" class="remove-button" [disabled]="addressControls.controls.length === 1">
-        <mat-icon>remove</mat-icon>
-      </button>
+      <div class="row">
+        <mat-form-field appearance="outline" class="long-input">
+          <mat-label>Street No. and Name</mat-label>
+          <input matInput type="text" formControlName="streetNumber">
+          <mat-hint>e.g. 148 Manok Street</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="short-input">
+          <mat-label>Barangay</mat-label>
+          <input matInput type="text" formControlName="barangay">
+          <mat-hint>e.g. Tibagan</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="outline" class="long-input">
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="city">
+          <mat-hint>e.g. Marikina </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="short-input">
+          <mat-label>Zip Code</mat-label>
+          <input matInput type="text" formControlName="zipCode">
+          <mat-hint>e.g. 2550</mat-hint>
+        </mat-form-field>
+      </div>
+
     </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline" class="long-input">
-        <mat-label>Street No. and Name</mat-label>
-        <input matInput type="text" formControlName="streetNumber">
-        <mat-hint>e.g. 148 Manok Street</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="short-input">
-        <mat-label>Barangay</mat-label>
-        <input matInput type="text" formControlName="barangay">
-        <mat-hint>e.g. Tibagan</mat-hint>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline" class="long-input">
-        <mat-label>City</mat-label>
-        <input matInput type="text" formControlName="city">
-        <mat-hint>e.g. Marikina</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="short-input">
-        <mat-label>Zip Code</mat-label>
-        <input matInput type="text" formControlName="zipCode">
-        <mat-hint>e.g. 2550</mat-hint>
-      </mat-form-field>
-    </div>
-  </ng-container>
+  </div>
 </div>
 
     <div class="title">
@@ -107,10 +109,10 @@
 
 <!-- Contact Information -->
 <div formArrayName="contactInformation">
-  <ng-container *ngFor="let contactGroup of contactControls.controls; let i = index" [formGroupName]="i">
+  <ng-container *ngFor="let contactGroup of contactControls.controls; let contactControlsIndex = index" [formGroupName]="contactControlsIndex">
     <div class="row">
       <div class="title">
-        <h3>Contact Information {{ i + 1 }}</h3>
+        <h3>Contact Information {{ contactControlsIndex + 1 }}</h3>
       </div>
       <button type="button" mat-icon-button color="primary" (click)="addContact()" class="add-button">
         <mat-icon>add</mat-icon>
@@ -119,7 +121,7 @@
         type="button"
         mat-icon-button
         color="warn"
-        (click)="removeContact(i)"
+        (click)="removeContact(contactControlsIndex)"
         class="remove-button"
         [disabled]="contactControls.controls.length === 1"
       >
@@ -183,27 +185,24 @@
       </div>
 
         <div class="row">
-          <div formArrayName="roles">
-            <ng-container *ngFor="let roleGroup of roleControls.controls; let i = index" [formGroupName]="i">
-              <div class="row" >
-
-                <div class="title">
-                  <h3>Role Details {{i+1 }}</h3>
-                  <button mat-icon-button color="primary" type="button" (click)="addRole()" class="add-button">
-                    <mat-icon>add</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" type="button" (click)="removeRole(i)" class="remove-button" [disabled]="roleControls.controls.length === 1">
-                    <mat-icon>remove</mat-icon>
-                  </button>
-                </div>
-
-                <mat-form-field appearance="outline" class="short-input">
-                  <mat-label>Role name</mat-label>
-                  <input matInput type="text" formControlName="roleName">
-                  <mat-hint>e.g. Dev, Manager</mat-hint>
-                </mat-form-field>
-              </div>
-            </ng-container>
+          <div formArrayName="roleName">
+            <div class="title">
+              <h3>Role Details</h3>
+            </div>
+            <div *ngFor="let roleName of roleFormArray.controls; let roleFormArrayIndex = index">
+              <mat-form-field appearance="outline" class="short-input">
+                <mat-label>Role {{roleFormArrayIndex + 1}}</mat-label>
+                <input matInput type="text" [formControlName]="roleFormArrayIndex">
+                <mat-hint>e.g. Dev, Manager</mat-hint>
+              </mat-form-field>
+              <button mat-icon-button color="primary" type="button" (click)="addRole()" class="add-button">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" type="button" (click)="removeRole(roleFormArrayIndex)"
+               class="remove-button" [disabled]="roleFormArray.controls.length === 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
       </ng-container>

@@ -25,8 +25,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { PersonDashboardComponent } from './components/person/person-dashboard/person-dashboard.component';
 import { PersonAddFormComponent } from './components/person/person-add-form/person-add-form.component';
 import { PersonTableComponent } from './components/person/person-table/person-table.component';
-import { SampleTableComponent } from './components/example/sample-table/sample-table.component';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -56,7 +54,7 @@ import { SampleTableComponent } from './components/example/sample-table/sample-t
     PersonDashboardComponent,
     PersonAddFormComponent,
     PersonTableComponent,
-    SampleTableComponent
+
   ],
   providers: [],
   bootstrap: [AppComponent]

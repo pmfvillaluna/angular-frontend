@@ -64,8 +64,10 @@ export class PersonTableComponent implements AfterViewInit {
     });
   }
 
-  openEditPersonForm(personData: any) {
-        const dialogRef = this.dialog.open(PersonAddFormComponent, {
+  openEditPersonForm(personData: FormData) {
+    console.log("PERSON TABLE COMING AT YOU ", personData)
+
+    const dialogRef = this.dialog.open(PersonAddFormComponent, {
       data: personData,
     });
 
@@ -140,5 +142,4 @@ export class PersonTableComponent implements AfterViewInit {
       error: console.log
     })
   }
-
 }

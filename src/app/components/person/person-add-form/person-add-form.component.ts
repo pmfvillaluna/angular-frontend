@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Person } from 'src/app/models/person';
 import { PersonService } from 'src/app/services/person.service';
@@ -24,8 +24,8 @@ export class PersonAddFormComponent implements OnInit {
   ngOnInit() {
     this.initializeForm();
     if (this.data) {
-      this.personForm.patchValue(this.data);
-      console.log("Data is", JSON.stringify(this.data));
+      console.log("Data in the edited form", JSON.stringify(this.data));
+      this.populateFormWithTableData();
     }
   }
 
@@ -50,9 +50,17 @@ export class PersonAddFormComponent implements OnInit {
       contactInformation: this.formBuilder.array([
         this.createContactInformationFormGroup()
       ], Validators.required),
-      roles: this.formBuilder.array([
-        this.createRoleFormGroup()
-      ])
+      roleName: this.formBuilder.array([''])
+    });
+  }
+
+
+
+  createContactInformationFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      landline: [null,  [Validators.required, Validators.pattern('[0-9\-]*')] ],
+      mobileNumber: [null,  [Validators.required, Validators.pattern('[0-9\-]*')]],
+      email: [null, [Validators.required, Validators.email]]
     });
   }
 
@@ -63,14 +71,6 @@ export class PersonAddFormComponent implements OnInit {
       barangay: null,
       city: null,
       zipCode: null
-    });
-  }
-
-  createContactInformationFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      landline: [null,  [Validators.required, Validators.pattern('[0-9\-]*')] ],
-      mobileNumber: [null,  [Validators.required, Validators.pattern('[0-9\-]*')]],
-      email: [null, [Validators.required, Validators.email]]
     });
   }
 
@@ -99,22 +99,16 @@ export class PersonAddFormComponent implements OnInit {
   }
 
 
-  createRoleFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      roleName: [null]
-    });
-  }
-
-  get roleControls(): FormArray {
-    return this.personForm.get('roles') as FormArray;
+  get roleFormArray(): FormArray {
+    return this.personForm.get('roleName') as FormArray;
   }
 
   addRole(): void {
-    this.roleControls.push(this.createRoleFormGroup());
+    this.roleFormArray.push(new FormControl(''));
   }
 
   removeRole(index: number): void {
-    this.roleControls.removeAt(index);
+    this.roleFormArray.removeAt(index);
   }
 
   onFormSubmit() {
@@ -153,5 +147,43 @@ export class PersonAddFormComponent implements OnInit {
   onCancel() {
     this.dialogRef.close();
   }
+
+  populateFormWithTableData() {
+    const { id, name, address, birthday, gwa, dateHired, employed, contactInformation, roleName } = this.data;
+
+    this.personForm.get('name.firstName')?.patchValue(name.firstName);
+    this.personForm.get('name.middleName')?.patchValue(name.middleName);
+    this.personForm.get('name.lastName')?.patchValue(name.lastName);
+    this.personForm.get('name.suffix')?.patchValue(name.suffix);
+    this.personForm.get('name.title')?.patchValue(name.title);
+
+    const addressArray = this.personForm.get('address') as FormArray;
+    addressArray.clear();
+    for (const addr of address) {
+      const addressFormGroup = this.createAddressFormGroup();
+      addressFormGroup.patchValue(addr);
+      addressArray.push(addressFormGroup);
+    }
+
+    this.personForm.get('birthday')?.patchValue(birthday);
+    this.personForm.get('gwa')?.patchValue(gwa);
+    this.personForm.get('dateHired')?.patchValue(dateHired);
+    this.personForm.get('employed')?.patchValue(employed);
+
+    const contactInfoArray = this.personForm.get('contactInformation') as FormArray;
+    contactInfoArray.clear();
+    for (const contact of contactInformation) {
+      const contactFormGroup = this.createContactInformationFormGroup();
+      contactFormGroup.patchValue(contact);
+      contactInfoArray.push(contactFormGroup);
+    }
+
+    const roleNameArray = this.personForm.get('roleName') as FormArray;
+    roleNameArray.clear();
+    for (const role of roleName) {
+      roleNameArray.push(new FormControl(role));
+    }
+  }
+
 
 }
